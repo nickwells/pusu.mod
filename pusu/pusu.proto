@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pusu;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nickwells/pusu.mod/pusu";
+
+// SubscriptionMsgPayload is the message used to send subscriptions and
+// unsubscriptions to the pub/sub server.
+message SubscriptionMsgPayload {
+  message Sub {
+    // the topic to subscribe to
+    string topic = 1;
+  }
+
+  // the collection of subscriptions
+  repeated Sub subs = 1;
+}
+
+// PublishMsgPayload is the message used to publish data on a topic
+message PublishMsgPayload {
+  // the topic on which to publish
+  string topic = 1;
+  // the data being published
+  bytes payload = 2;
+}
+
+// PingMsgPayload is the message used to request a Ping response from the
+// server. It is returned, unchanged, to the client.
+message PingMsgPayload {
+  // the time the ping was requested
+  google.protobuf.Timestamp pingTime = 1;
+}
