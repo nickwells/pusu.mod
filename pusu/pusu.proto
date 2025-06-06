@@ -5,6 +5,19 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/nickwells/pusu.mod/pusu";
 
+
+// StartMsgPayload is the first message to the pub/sub server. It gives a
+// string describing the client and the namespace in which all the topics
+// provided in Subscribe, Unsubscribe and Publish messages are registered.
+message StartMsgPayload {
+  // the protocol version that the client is using
+  int32 protocolVersion = 1;
+  // the clientId provides some identifying text for the client
+  string clientId = 2;
+  // the namespace for the topics
+  string namespace = 3;
+}
+
 // SubscriptionMsgPayload is the message used to send subscriptions and
 // unsubscriptions to the pub/sub server.
 message SubscriptionMsgPayload {
@@ -25,8 +38,16 @@ message PublishMsgPayload {
   bytes payload = 2;
 }
 
+// ErrorMsgPayload is the message send by the server to indicate an error
+// with the message
+message ErrorMsgPayload {
+  // the error text describes the problem with the message
+  string error = 1;
+}
+
 // PingMsgPayload is the message used to request a Ping response from the
-// server. It is returned, unchanged, to the client.
+// server. It is returned, unchanged, to the client. It is not acknowledged
+// by the server.
 message PingMsgPayload {
   // the time the ping was requested
   google.protobuf.Timestamp pingTime = 1;

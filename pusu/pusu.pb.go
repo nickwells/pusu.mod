@@ -22,6 +22,72 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// StartMsgPayload is the first message to the pub/sub server. It gives a
+// string describing the client and the namespace in which all the topics
+// provided in Subscribe, Unsubscribe and Publish messages are registered.
+type StartMsgPayload struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// the protocol version that the client is using
+	ProtocolVersion int32 `protobuf:"varint,1,opt,name=protocolVersion,proto3" json:"protocolVersion,omitempty"`
+	// the clientId provides some identifying text for the client
+	ClientId string `protobuf:"bytes,2,opt,name=clientId,proto3" json:"clientId,omitempty"`
+	// the namespace for the topics
+	Namespace     string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StartMsgPayload) Reset() {
+	*x = StartMsgPayload{}
+	mi := &file_pusu_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StartMsgPayload) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StartMsgPayload) ProtoMessage() {}
+
+func (x *StartMsgPayload) ProtoReflect() protoreflect.Message {
+	mi := &file_pusu_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StartMsgPayload.ProtoReflect.Descriptor instead.
+func (*StartMsgPayload) Descriptor() ([]byte, []int) {
+	return file_pusu_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *StartMsgPayload) GetProtocolVersion() int32 {
+	if x != nil {
+		return x.ProtocolVersion
+	}
+	return 0
+}
+
+func (x *StartMsgPayload) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *StartMsgPayload) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
 // SubscriptionMsgPayload is the message used to send subscriptions and
 // unsubscriptions to the pub/sub server.
 type SubscriptionMsgPayload struct {
@@ -34,7 +100,7 @@ type SubscriptionMsgPayload struct {
 
 func (x *SubscriptionMsgPayload) Reset() {
 	*x = SubscriptionMsgPayload{}
-	mi := &file_pusu_proto_msgTypes[0]
+	mi := &file_pusu_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +112,7 @@ func (x *SubscriptionMsgPayload) String() string {
 func (*SubscriptionMsgPayload) ProtoMessage() {}
 
 func (x *SubscriptionMsgPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_pusu_proto_msgTypes[0]
+	mi := &file_pusu_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +125,7 @@ func (x *SubscriptionMsgPayload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscriptionMsgPayload.ProtoReflect.Descriptor instead.
 func (*SubscriptionMsgPayload) Descriptor() ([]byte, []int) {
-	return file_pusu_proto_rawDescGZIP(), []int{0}
+	return file_pusu_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SubscriptionMsgPayload) GetSubs() []*SubscriptionMsgPayload_Sub {
@@ -82,7 +148,7 @@ type PublishMsgPayload struct {
 
 func (x *PublishMsgPayload) Reset() {
 	*x = PublishMsgPayload{}
-	mi := &file_pusu_proto_msgTypes[1]
+	mi := &file_pusu_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +160,7 @@ func (x *PublishMsgPayload) String() string {
 func (*PublishMsgPayload) ProtoMessage() {}
 
 func (x *PublishMsgPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_pusu_proto_msgTypes[1]
+	mi := &file_pusu_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +173,7 @@ func (x *PublishMsgPayload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PublishMsgPayload.ProtoReflect.Descriptor instead.
 func (*PublishMsgPayload) Descriptor() ([]byte, []int) {
-	return file_pusu_proto_rawDescGZIP(), []int{1}
+	return file_pusu_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *PublishMsgPayload) GetTopic() string {
@@ -124,8 +190,56 @@ func (x *PublishMsgPayload) GetPayload() []byte {
 	return nil
 }
 
+// ErrorMsgPayload is the message send by the server to indicate an error
+// with the message
+type ErrorMsgPayload struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// the error text describes the problem with the message
+	Error         string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ErrorMsgPayload) Reset() {
+	*x = ErrorMsgPayload{}
+	mi := &file_pusu_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ErrorMsgPayload) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ErrorMsgPayload) ProtoMessage() {}
+
+func (x *ErrorMsgPayload) ProtoReflect() protoreflect.Message {
+	mi := &file_pusu_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ErrorMsgPayload.ProtoReflect.Descriptor instead.
+func (*ErrorMsgPayload) Descriptor() ([]byte, []int) {
+	return file_pusu_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ErrorMsgPayload) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
 // PingMsgPayload is the message used to request a Ping response from the
-// server. It is returned, unchanged, to the client.
+// server. It is returned, unchanged, to the client. It is not acknowledged
+// by the server.
 type PingMsgPayload struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// the time the ping was requested
@@ -136,7 +250,7 @@ type PingMsgPayload struct {
 
 func (x *PingMsgPayload) Reset() {
 	*x = PingMsgPayload{}
-	mi := &file_pusu_proto_msgTypes[2]
+	mi := &file_pusu_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -148,7 +262,7 @@ func (x *PingMsgPayload) String() string {
 func (*PingMsgPayload) ProtoMessage() {}
 
 func (x *PingMsgPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_pusu_proto_msgTypes[2]
+	mi := &file_pusu_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -161,7 +275,7 @@ func (x *PingMsgPayload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingMsgPayload.ProtoReflect.Descriptor instead.
 func (*PingMsgPayload) Descriptor() ([]byte, []int) {
-	return file_pusu_proto_rawDescGZIP(), []int{2}
+	return file_pusu_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *PingMsgPayload) GetPingTime() *timestamppb.Timestamp {
@@ -181,7 +295,7 @@ type SubscriptionMsgPayload_Sub struct {
 
 func (x *SubscriptionMsgPayload_Sub) Reset() {
 	*x = SubscriptionMsgPayload_Sub{}
-	mi := &file_pusu_proto_msgTypes[3]
+	mi := &file_pusu_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -193,7 +307,7 @@ func (x *SubscriptionMsgPayload_Sub) String() string {
 func (*SubscriptionMsgPayload_Sub) ProtoMessage() {}
 
 func (x *SubscriptionMsgPayload_Sub) ProtoReflect() protoreflect.Message {
-	mi := &file_pusu_proto_msgTypes[3]
+	mi := &file_pusu_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -206,7 +320,7 @@ func (x *SubscriptionMsgPayload_Sub) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubscriptionMsgPayload_Sub.ProtoReflect.Descriptor instead.
 func (*SubscriptionMsgPayload_Sub) Descriptor() ([]byte, []int) {
-	return file_pusu_proto_rawDescGZIP(), []int{0, 0}
+	return file_pusu_proto_rawDescGZIP(), []int{1, 0}
 }
 
 func (x *SubscriptionMsgPayload_Sub) GetTopic() string {
@@ -221,14 +335,20 @@ var File_pusu_proto protoreflect.FileDescriptor
 const file_pusu_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"pusu.proto\x12\x04pusu\x1a\x1fgoogle/protobuf/timestamp.proto\"k\n" +
+	"pusu.proto\x12\x04pusu\x1a\x1fgoogle/protobuf/timestamp.proto\"u\n" +
+	"\x0fStartMsgPayload\x12(\n" +
+	"\x0fprotocolVersion\x18\x01 \x01(\x05R\x0fprotocolVersion\x12\x1a\n" +
+	"\bclientId\x18\x02 \x01(\tR\bclientId\x12\x1c\n" +
+	"\tnamespace\x18\x03 \x01(\tR\tnamespace\"k\n" +
 	"\x16SubscriptionMsgPayload\x124\n" +
 	"\x04subs\x18\x01 \x03(\v2 .pusu.SubscriptionMsgPayload.SubR\x04subs\x1a\x1b\n" +
 	"\x03Sub\x12\x14\n" +
 	"\x05topic\x18\x01 \x01(\tR\x05topic\"C\n" +
 	"\x11PublishMsgPayload\x12\x14\n" +
 	"\x05topic\x18\x01 \x01(\tR\x05topic\x12\x18\n" +
-	"\apayload\x18\x02 \x01(\fR\apayload\"H\n" +
+	"\apayload\x18\x02 \x01(\fR\apayload\"'\n" +
+	"\x0fErrorMsgPayload\x12\x14\n" +
+	"\x05error\x18\x01 \x01(\tR\x05error\"H\n" +
 	"\x0ePingMsgPayload\x126\n" +
 	"\bpingTime\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\bpingTimeB$Z\"github.com/nickwells/pusu.mod/pusub\x06proto3"
 
@@ -244,17 +364,19 @@ func file_pusu_proto_rawDescGZIP() []byte {
 	return file_pusu_proto_rawDescData
 }
 
-var file_pusu_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_pusu_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_pusu_proto_goTypes = []any{
-	(*SubscriptionMsgPayload)(nil),     // 0: pusu.SubscriptionMsgPayload
-	(*PublishMsgPayload)(nil),          // 1: pusu.PublishMsgPayload
-	(*PingMsgPayload)(nil),             // 2: pusu.PingMsgPayload
-	(*SubscriptionMsgPayload_Sub)(nil), // 3: pusu.SubscriptionMsgPayload.Sub
-	(*timestamppb.Timestamp)(nil),      // 4: google.protobuf.Timestamp
+	(*StartMsgPayload)(nil),            // 0: pusu.StartMsgPayload
+	(*SubscriptionMsgPayload)(nil),     // 1: pusu.SubscriptionMsgPayload
+	(*PublishMsgPayload)(nil),          // 2: pusu.PublishMsgPayload
+	(*ErrorMsgPayload)(nil),            // 3: pusu.ErrorMsgPayload
+	(*PingMsgPayload)(nil),             // 4: pusu.PingMsgPayload
+	(*SubscriptionMsgPayload_Sub)(nil), // 5: pusu.SubscriptionMsgPayload.Sub
+	(*timestamppb.Timestamp)(nil),      // 6: google.protobuf.Timestamp
 }
 var file_pusu_proto_depIdxs = []int32{
-	3, // 0: pusu.SubscriptionMsgPayload.subs:type_name -> pusu.SubscriptionMsgPayload.Sub
-	4, // 1: pusu.PingMsgPayload.pingTime:type_name -> google.protobuf.Timestamp
+	5, // 0: pusu.SubscriptionMsgPayload.subs:type_name -> pusu.SubscriptionMsgPayload.Sub
+	6, // 1: pusu.PingMsgPayload.pingTime:type_name -> google.protobuf.Timestamp
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
@@ -273,7 +395,7 @@ func file_pusu_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pusu_proto_rawDesc), len(file_pusu_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -15,7 +15,7 @@ type Topic string
 
 // Attr creates a standard slog Attr representing the topic
 func (t Topic) Attr() slog.Attr {
-	return slog.String(PuSuPrefix+"Topic", string(t))
+	return slog.String(AttrPfx+"Topic", string(t))
 }
 
 // Check returns a non-nil error if the topic is invalid
@@ -26,11 +26,37 @@ func (t Topic) Check() error {
 
 	tStr := string(t)
 	cleanTopic := path.Clean(tStr)
+
 	if tStr != cleanTopic {
 		return t.stdErr(fmt.Sprintf("unclean - replace with %q", cleanTopic))
 	}
 
 	return nil
+}
+
+// SubTopics progressively strips the last part of the topic path and returns
+// a slice of the resultant topics. So if you pass it a topic '/a/b/c' it
+// will return a slice: [ '/a/b/c', '/a/b', '/a', '/' ].
+func (t Topic) SubTopics() []Topic {
+	subTopics := []Topic{t}
+
+	if err := t.Check(); err != nil {
+		return subTopics
+	}
+
+TopicLoop:
+	for {
+		newTopic := Topic(path.Dir(string(t)))
+
+		if newTopic == t {
+			break TopicLoop
+		}
+
+		t = newTopic
+		subTopics = append(subTopics, t)
+	}
+
+	return subTopics
 }
 
 // stdErr returns a standardised error representing a problem with the topic

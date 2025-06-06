@@ -8,19 +8,20 @@ func _() {
 	// An "invalid array index" compiler error signifies that the constant values have changed.
 	// Re-run the stringer command to generate them again.
 	var x [1]struct{}
-	_ = x[MinMsgType-0]
-	_ = x[Identify-1]
+	_ = x[Invalid-0]
+	_ = x[Start-1]
 	_ = x[Publish-2]
 	_ = x[Subscribe-3]
 	_ = x[Unsubscribe-4]
-	_ = x[UnsubscribeAll-5]
-	_ = x[Ping-6]
-	_ = x[MaxMsgType-7]
+	_ = x[Ping-5]
+	_ = x[Error-6]
+	_ = x[Ack-7]
+	_ = x[MaxMsgType-8]
 }
 
-const _MsgType_name = "MinMsgTypeIdentifyPublishSubscribeUnsubscribeUnsubscribeAllPingMaxMsgType"
+const _MsgType_name = "InvalidStartPublishSubscribeUnsubscribePingErrorAckMaxMsgType"
 
-var _MsgType_index = [...]uint8{0, 10, 18, 25, 34, 45, 59, 63, 73}
+var _MsgType_index = [...]uint8{0, 7, 12, 19, 28, 39, 43, 48, 51, 61}
 
 func (i MsgType) String() string {
 	if i >= MsgType(len(_MsgType_index)-1) {
