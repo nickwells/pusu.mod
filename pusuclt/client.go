@@ -684,7 +684,7 @@ func (c *Client) handleError(msg pusu.Message) error {
 func (c *Client) handlePublish(msg pusu.Message) error {
 	var pubMsg pusu.PublishMsgPayload
 
-	if err := msg.Unmarshal(&pubMsg, c.logger); err == nil {
+	if err := msg.Unmarshal(&pubMsg, c.logger); err != nil {
 		return err
 	}
 
