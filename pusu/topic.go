@@ -6,6 +6,20 @@ import (
 	"path"
 )
 
+// NoteTextTopic provides a narrative description of what a Topic is.
+const NoteTextTopic = "A publish/subscribe topic provides routing information" +
+	" for the message broker (the pub/sub server) to decide where to send" +
+	" messages it has received." +
+	"\n\n" +
+	"A client can subscribe to a topic and then any messages which are" +
+	" subsequently published on that topic will be sent to that client." +
+	" To stop receiving such messages the client will need to" +
+	" unsubsubscribe from that topic." +
+	"\n\n" +
+	"A topic name must be a well-formed path, starting with a '/' and" +
+	" having one or more parts following this, each part separated from its" +
+	" predecessor by a single '/'."
+
 // Topic represents a pub/sub topic. Clients subscribe to topics and publish
 // messages on the topics and the pub/sub server distributes those messages
 // to any clients subscribed to the topic. Note that a valid topic must be a
