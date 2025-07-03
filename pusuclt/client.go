@@ -177,9 +177,9 @@ func (c *Client) connect() error {
 	go c.readConn()
 
 	var startAckChan chan error
-
 	if startAckChan, err = c.writeStartMsg(); err != nil {
 		_ = c.conn.Close()
+
 		return fmt.Errorf("client startup failed: %s: %w",
 			c.serverDetails(), err)
 	}
@@ -364,6 +364,7 @@ func (c *Client) Subscribe(cb Callback, handlers ...TopicHandler) error {
 	msgID := c.nextMsgID()
 
 	c.addCallback(msgID, cb)
+
 	c.sendChan <- &pusu.Message{
 		MT:      pusu.Subscribe,
 		MsgID:   msgID,
@@ -431,6 +432,7 @@ func (c *Client) Unsubscribe(cb Callback, handlers ...TopicHandler) error {
 	msgID := c.nextMsgID()
 
 	c.addCallback(msgID, cb)
+
 	c.sendChan <- &pusu.Message{
 		MT:      pusu.Unsubscribe,
 		MsgID:   msgID,
@@ -475,6 +477,7 @@ func (c *Client) Publish(
 	msgID := c.nextMsgID()
 
 	c.addCallback(msgID, cb)
+
 	c.sendChan <- &pusu.Message{
 		MT:      pusu.Publish,
 		MsgID:   msgID,
@@ -490,8 +493,8 @@ func (c *Client) close() {
 	defer c.mtx.Unlock()
 
 	if !c.connected {
-		c.logger.Error("cannot close connection",
-			pusu.ErrorAttr(errNoConn))
+		c.logger.Error("cannot close connection", pusu.ErrorAttr(errNoConn))
+
 		return
 	}
 
@@ -642,6 +645,7 @@ Loop:
 			break Loop
 		}
 	}
+
 	c.logger.Info("connection reading finished")
 }
 

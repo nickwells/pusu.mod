@@ -127,7 +127,6 @@ func ReadMsg(r io.Reader) (Message, error) {
 	var msg Message
 
 	var err error
-
 	if hdr, err = readMsgHdr(r); err != nil {
 		return msg, err
 	}

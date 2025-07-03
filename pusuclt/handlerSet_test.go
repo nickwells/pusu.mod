@@ -200,12 +200,11 @@ func TestAllHandlers(t *testing.T) {
 					t.Fatalf("%s: bad work entry at %d\n", tc.ID, i)
 				}
 			}
+
 			testhelper.CheckExpErr(t, err, tc)
-			testhelper.DiffInt(t,
-				tc.IDStr(), "handlerSet entry count",
+			testhelper.DiffInt(t, tc.IDStr(), "handlerSet entry count",
 				hs.handlerCount(), tc.expCount)
-			testhelper.DiffInt(t,
-				tc.IDStr(), "handlerSet in-order entry count",
+			testhelper.DiffInt(t, tc.IDStr(), "handlerSet in-order entry count",
 				len(hs.handlersInOrder), tc.expHandlersInOrderLen)
 		})
 	}

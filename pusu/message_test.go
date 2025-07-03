@@ -56,6 +56,7 @@ func TestMessageWrite(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.Name, func(t *testing.T) {
 			var b bytes.Buffer
+
 			err := tc.msg.Write(&b)
 			testhelper.CheckExpErr(t, err, tc)
 
