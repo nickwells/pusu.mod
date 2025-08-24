@@ -184,7 +184,7 @@ func TestMessageRead(t *testing.T) {
 			ID: testhelper.MkID("bad message start - bad magic number"),
 			ExpErr: testhelper.MkExpErr(
 				readErrIntro,
-				"bad message start, should be: 0xB0AD1CEA, is: 0xB0AD1CEB"),
+				"bad message start, should be: 0xb0ad1cea, is: 0xb0ad1ceb"),
 			readBuf: badMagicBuf,
 		},
 		{

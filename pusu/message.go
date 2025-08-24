@@ -93,7 +93,7 @@ func readMsgHdr(r io.Reader) (msgHdr, error) {
 	if hdr.Magic != magicID {
 		return hdr,
 			fmt.Errorf(
-				readErrIntro+"bad message start, should be: 0x%X, is: 0x%X",
+				readErrIntro+"bad message start, should be: %#x, is: %#x",
 				magicID, hdr.Magic)
 	}
 

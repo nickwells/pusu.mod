@@ -38,6 +38,6 @@ func (th TopicHandler) String() string {
 		return fmt.Sprintf("TopicHandler{Topic: %q, Handler: nil}", th.Topic)
 	}
 
-	return fmt.Sprintf("TopicHandler{Topic: %q, Handler: 0x%x}",
+	return fmt.Sprintf("TopicHandler{Topic: %q, Handler: %#x}",
 		th.Topic, th.id())
 }
